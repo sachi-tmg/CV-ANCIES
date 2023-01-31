@@ -110,7 +110,6 @@ def register():
        pw_entry.delete(0,END)
     def del6(event):
        cpw_try.delete(0,END)
-
     #show password functions 
     def show():
         if (yup.get()==1):
