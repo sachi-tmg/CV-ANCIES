@@ -1,0 +1,33 @@
+#indicate_buttons
+home_indicate=tk.Label(bar,text=' ',bg="#d3b1ac")
+home_indicate.place(x=0,y=240,width=5,height=37)
+
+about_indicate=tk.Label(bar,text=' ',bg="#d3b1ac")
+about_indicate.place(x=0,y=285,width=5,height=37)
+
+cv_indicate=tk.Label(bar,text=' ',bg="#d3b1ac")
+cv_indicate.place(x=0,y=330,width=5,height=37)
+
+vacancy_indicate=tk.Label(bar,text=' ',bg="#d3b1ac")
+vacancy_indicate.place(x=0,y=375,width=5,height=37)
+
+back_indicate=tk.Label(bar,text=' ',bg="#d3b1ac")
+back_indicate.place(x=0,y=420,width=5,height=37)
+
+exit_indicate=tk.Label(bar,text=' ',bg="#d3b1ac")
+exit_indicate.place(x=0,y=465,width=5,height=37)
+
+#hide_function-------
+def hide_indicators(lb):
+    home_indicate.config(bg="#d3b1ac")
+    about_indicate.config(bg="#d3b1ac")
+    cv_indicate.config(bg="#d3b1ac")
+    vacancy_indicate.config(bg="#d3b1ac")
+    back_indicate.config(bg="#d3b1ac")
+    exit_indicate.config(bg="#d3b1ac")
+
+#indicate_function---------------
+def indicate(lb,page):
+    hide_indicators(lb)
+    lb.config(bg='#91ffff')
+    page()
