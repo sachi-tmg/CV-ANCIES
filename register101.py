@@ -29,39 +29,11 @@ def register():
     reg_p.iconbitmap('logo..ico')
     reg_p.config(bg="#4A78A9")
 
-    
-      #  from cv_vacancy import vacancy_btn 
-      #  from cv_vacancy import cv_btn
-
-    #    updated=form.get()
-
-    #    if updated!= 1 or 2:
-    #       win=Tk()
-    #       win.title('Error')
-    #       win.minsize(250,200)
-    #       win.maxsize(250,200)
-    #       Label(print("1 or 2 field is empty"))
-          
-    #    if updated==1:
-    #      #  from cv_vacancy import vacancy_btn
-    #       reg_p.destroy()
-    #       import vacancy
-    #      #  vacancy_btn["state"]=DISABLED
-    #    elif updated==2:
-    #       reg_p.destroy()
-    #       import cvform
-    #      #  cv_btn["state"]=DISABLED
 
     def login_page(): 
           reg_p.destroy()
           import login
 
-    # def agree():
-    #     import condn 
-    #     if condn.y==1:
-    #         datab()
-    #     elif condn.n==2:
-    #         sign_in.destroy()
 
 #company name---------------------------------------------------------
     def c_name():
@@ -137,58 +109,6 @@ def register():
         if x=='re-enter':
             cpw_try.delete(0,END)
 
-    #show password functions 
-    # def show():
-    #     if (yup.get()==1):
-    #         pw_entry.config(show='')
-    #     else:
-    #         pw_entry.config(show='*')
-
-    # def show2():
-    #     if  (yupp.get()==1):
-    #         cpw_try.config(show='')
-    #     else:
-    #         cpw_try.config(show='*')
-    
-    #hide and show imgs----------------------------------------------
-    # a=Image.open('show.png')
-    # a1=a.resize((20,20))
-    # show_img=ImageTk.PhotoImage(a1)
-
-    # b=Image.open('hide.png')
-    # b1=b.resize((20,20))
-    # hide_img=ImageTk.PhotoImage(b1)
-
-    # def hide():
-    #    show_btn=Button(frame_r,image=show_img,command=show,bg="white",borderwidth=0,activebackground="#CBD8ED")
-    #    show_btn.place(y=340,x=290)
-    #    pw_entry.config(show="*")
-
-    # def show():
-    #    hide_btn=Button(frame_r,image=hide_img,command=hide,bg="white",borderwidth=0,activebackground="#CBD8ED")
-    #    hide_btn.place(y=340,x=290)
-    #    pw_entry.config(show="")
-    
-    # def hide1():
-    #    show_btn=Button(frame_r,image=show_img,command=show,bg="white",borderwidth=0,activebackground="#CBD8ED")
-    #    show_btn.place(y=208,x=265)
-    #    cpw_try.config(show="*")
-
-    # def show1():
-    #    hide_btn=Button(frame_r,image=hide_img,command=hide,bg="white",borderwidth=0,activebackground="#CBD8ED")
-    #    hide_btn.place(y=208,x=265)
-    #    cpw_try.config(show="")
-
-    # show_btn=Button(frame_r,image=show_img,command=show,bg="#CBD8ED",borderwidth=0,activebackground="#CBD8ED")
-    # show_btn.place(y=340,x=290)
-    # hide_btn=Button(frame_r,image=hide_img,command=hide,bg="#CBD8ED",borderwidth=0,activebackground="#CBD8ED")
-    # hide_btn.place(y=340,x=290)
-
-    # show_btn1=Button(frame_r,image=show_img,command=show1,bg="#CBD8ED",borderwidth=0,activebackground="#CBD8ED")
-    # show_btn1.place(y=208,x=265)
-    # hide_btn1=Button(frame_r,image=hide_img,command=hide1,bg="#CBD8ED",borderwidth=0,activebackground="#CBD8ED")
-    # hide_btn1.place(y=208,x=265)
-
     #label and entries---------------------------------------
     f_name=Label(frame_r,text="First Name: ",font=my_font1,bg="#213A5C",fg="white")
     f_name.place(x=50,y=110)
@@ -224,9 +144,7 @@ def register():
     pw_entry=Entry(frame_r,font=my_font1,bg="white",fg="black",show="*")
     pw_entry.insert(0,"password")
     pw_entry.place(x=50,y=340)
-    pw_entry.bind("<FocusIn>",del5)
-    # yup=IntVar(value=1)
-    # Checkbutton(text='Show',indicatoron=0,offvalue=0,variable=yup,bg='#E2E6E8',command=show).place(x=365,y=442) 
+    pw_entry.bind("<FocusIn>",del5) 
 
     con_pw=Label(frame_r,text="Confirm Password: ",font=my_font1,bg="#213A5C",fg="white")
     con_pw.place(x=355,y=300)
@@ -235,8 +153,7 @@ def register():
     cpw_try.insert(0,"re-enter")
     cpw_try.place(x=355,y=340)
     cpw_try.bind("<FocusIn>",del6)
-    # yupp=IntVar(value=1)
-    # Checkbutton(text='Show',offvalue=0,variable=yupp,bg='#E2E6E8',command=show2).place(x=670,y=442) 
+    
     
       #hide and show imgs----------------------------------------------
     a=Image.open('show.png')
