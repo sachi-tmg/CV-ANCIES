@@ -23,7 +23,8 @@ def register():
                 l_name text,
                 u_name PRIMARY KEY,
                 email varchar,
-                pw varrchar
+                pw varrchar,
+                category text
                 )
             """)
             log.commit()
@@ -84,6 +85,19 @@ def register():
            pass
         else: 
            pass
+    
+    #gggggggggg
+    def cat(): 
+      #  from cv_vacancy import vacancy_btn 
+      #  from cv_vacancy import cv_btn
+       updated=form.get()
+       global opt
+       if updated==1:
+         #  from cv_vacancy import vacancy_btn
+          opt='Company'
+         #  vacancy_btn["state"]=DISABLED
+       elif updated==2:
+          opt='User'
            
     #fonts------------------------------------------------
     my_font = Font(
@@ -222,6 +236,7 @@ def register():
             messagebox.showerror("Signup","Passwords not match")
         else:
             form_page()
+            cat()
             submit()
             
     #condn and conditions 
@@ -241,12 +256,13 @@ def register():
         log1= log.cursor() 
     
     #insert into tables
-        log1.execute("INSERT INTO vancy VALUES(:f_name, :l_name, :u_name, :email, :pw)", {
+        log1.execute("INSERT INTO vancy VALUES(:f_name, :l_name, :u_name, :email, :pw, :category)", {
             'f_name':f_entry.get(),
             'l_name':l_entry.get(),
             'u_name':u_entry.get(),
             'email':email_try.get(),
-            'pw':pw_entry.get()
+            'pw':pw_entry.get(),
+            'category':opt
         })
    
         log.commit()
