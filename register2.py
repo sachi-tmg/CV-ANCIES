@@ -1,4 +1,5 @@
 from tkinter import *
+import sqlite3
 from PIL import Image, ImageTk
 from tkinter.font import Font
 from tkinter import messagebox
@@ -10,12 +11,30 @@ def register():
     reg_p.title("CV-ANCIES")
     reg_p.iconbitmap('logo..ico')
     reg_p.config(bg="#545B5C")
-   
+
+    #creating a database table
+    
     def form_page(): 
+        try:
+            log=sqlite3.connect('Check.db')
+            log1=log.cursor()
+            log1.execute("""CREATE TABLE vancy(
+                f_name text,
+                l_name text,
+                u_name PRIMARY KEY,
+                email varchar,
+                pw varrchar
+                )
+            """)
+            log.commit()
+            log.close()
+        except:
+            pass
+    
       #  from cv_vacancy import vacancy_btn 
       #  from cv_vacancy import cv_btn
 
-       updated=form.get()
+    #    updated=form.get()
 
 
     #    if updated!= 1 or 2:
@@ -27,15 +46,15 @@ def register():
 
 
           
-       if updated==1:
-         #  from cv_vacancy import vacancy_btn
-          reg_p.destroy()
-          import vacancy
-         #  vacancy_btn["state"]=DISABLED
-       elif updated==2:
-          reg_p.destroy()
-          import cvform
-         #  cv_btn["state"]=DISABLED
+    #    if updated==1:
+    #      #  from cv_vacancy import vacancy_btn
+    #       reg_p.destroy()
+    #       import vacancy
+    #      #  vacancy_btn["state"]=DISABLED
+    #    elif updated==2:
+    #       reg_p.destroy()
+    #       import cvform
+    #      #  cv_btn["state"]=DISABLED
 
     def login_page(): 
       #  from cv_vacancy import vacancy_btn 
@@ -45,10 +64,10 @@ def register():
          #  cv_btn["state"]=DISABLED
 
     def agree():
-       import terms 
-       if terms.y==1:
+       import condn 
+       if condn.y==1:
           pass
-       elif terms.n==2:
+       elif condn.n==2:
           sign_in.destroy()
 
 #company name---------------------------------------------------------
@@ -99,17 +118,30 @@ def register():
 
     #deleet funcs----------------------------------------------
     def del1(event):
-       f_entry.delete(0,END)
+        x=f_entry.get()
+        if x=='first name':
+            f_entry.delete(0,END)
     def del2(event):
-       l_entry.delete(0,END)
+        x=l_entry.get()
+        if x=='last name':
+            l_entry.delete(0,END)
     def del3(event):
-       u_entry.delete(0,END)
+        x=u_entry.get()
+        if x=='Username':
+            u_entry.delete(0,END)
     def del4(event):
-       email_try.delete(0,END)
+        x=email_try.get()
+        if x=='email@':
+            email_try.delete(0,END)
     def del5(event):
-       pw_entry.delete(0,END)
+        x=pw_entry.get()
+        if x=='password':
+            pw_entry.delete(0,END)
     def del6(event):
-       cpw_try.delete(0,END)
+        x=cpw_try.get()
+        if x=='re-enter':
+            cpw_try.delete(0,END)
+
     #show password functions 
     def show():
         if (yup.get()==1):
@@ -155,7 +187,7 @@ def register():
     pw.place(x=50,y=300)
 
     pw_entry=Entry(frame_r,font=my_font1,bg="#E2E6E8",fg="black",show="*")
-    pw_entry.insert(0,"create password")
+    pw_entry.insert(0,"password")
     pw_entry.place(x=50,y=340)
     pw_entry.bind("<FocusIn>",del5)
     yup=IntVar(value=1)
@@ -165,7 +197,7 @@ def register():
     con_pw.place(x=355,y=300)
 
     cpw_try=Entry(frame_r,font=my_font1,bg="#E2E6E8",fg="black",show="*")
-    cpw_try.insert(0,"confirm password")
+    cpw_try.insert(0,"re-enter")
     cpw_try.place(x=355,y=340)
     cpw_try.bind("<FocusIn>",del6)
     yupp=IntVar(value=1)
@@ -180,19 +212,20 @@ def register():
         e=pw_entry.get()
         f=cpw_try.get()
             
-        if (a=="" or a=="first name") or (b=="" or b=="last name") or (c=="" or c=="Username") or (d=="" or d=="email@") or (e=="" or e=="create password") or (f=="" or f=="confirm password"):
+        if (a=="" or a=="first name") or (b=="" or b=="last name") or (c=="" or c=="Username") or (d=="" or d=="email@") or (e=="" or e=="password") or (f=="" or f=="re-enter"):
             messagebox.showerror("Signup","One or More Fields Empty.")
-        elif "@" and ".com" not in b:
+        elif "@" and ".com" not in d:
             messagebox.showerror("Signup","Invalid Email")
-        elif len(d)<7 or len(e)<7:
+        elif len(e)<7 or len(e)<7:
             messagebox.showerror("Signup","Password must be more than 7 characters")
-        elif len(c)!=10:
-            messagebox.showerror("Signup","Invalid Phone Number Length")
-        elif e!=d:
+        elif e!=f:
             messagebox.showerror("Signup","Passwords not match")
-    
-    #terms and conditions 
-    agree_btn=Button(frame_r,text="terms and conditions",font=my_font,bg="#2B2828",fg="#fCA311",command=agree)
+        else:
+            form_page()
+            submit()
+            
+    #condn and conditions 
+    agree_btn=Button(frame_r,text="condn and conditions",font=my_font,bg="#2B2828",fg="#fCA311",command=agree)
     agree_btn.place(x=445,y=440)
     global sign_in
     sign_in=Button(frame_r,text="SIGN UP",font=my_font1,bg="#fCA311",fg="black",command=verify)
@@ -200,6 +233,34 @@ def register():
     global log_in
     log_in=Button(frame_r,text="GO TO LOGIN",font=my_font1,bg="#fCA311",fg="black",command=login_page)
     log_in.place(x=320,y=475)   
+
+    def submit():
+        log= sqlite3.connect('CHECK.db')
+
+    #create cursor
+        log1= log.cursor() 
+    
+    #insert into tables
+        log1.execute("INSERT INTO vancy VALUES(:f_name, :l_name, :u_name, :email, :pw)", {
+            'f_name':f_entry.get(),
+            'l_name':l_entry.get(),
+            'u_name':u_entry.get(),
+            'email':email_try.get(),
+            'pw':pw_entry.get()
+        })
+   
+        log.commit()
+        log.close()
+
+    #clear entries
+        f_entry.delete(0,END)
+        l_entry.delete(0, END)
+        u_entry.delete(0, END)
+        email_try.delete(0, END)
+        pw_entry.delete(0, END)
+        cpw_try.delete(0,END)
+
+        messagebox.showinfo('Registered','You have signed up successfully!')
     
     form=IntVar()
    #  form.set("vacancy")
