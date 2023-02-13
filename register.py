@@ -19,7 +19,7 @@ def register():
     
     def form_page(): 
         try:
-            log=sqlite3.connect('CVAN.db')
+            log=sqlite3.connect('Check.db')
             log1=log.cursor()
             log1.execute("""CREATE TABLE vancy(
                 f_name text,
@@ -243,7 +243,7 @@ def register():
     log_in.place(x=395,y=495)   
 
     def submit():
-        log= sqlite3.connect('CVAN.db')
+        log= sqlite3.connect('Check.db')
 
     #create cursor
         log1= log.cursor() 
@@ -286,4 +286,5 @@ def register():
     reg_p.mainloop()
 
 register()
+
 
