@@ -179,7 +179,6 @@ register_btn=Button(logon,bg="#4A78A9",fg='white',text="REGISTER",font=my_font0,
 register_btn.place(x=110,y=329)
 
 
-
 img2=Image.open('help.png')
 img3=img2.resize((20,20))
 help_ico=ImageTk.PhotoImage(img3)
