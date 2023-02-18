@@ -65,18 +65,28 @@ def load_cv_values():
         # Retrieve the CV information
         c.execute("SELECT * FROM cv_placement")
         # global records
+        flag=""
         records=c.fetchall()
+        for record in records:
+            for value in record:
+                if value==b:
+                    flag=value
+        if flag=="":
+            if b=="" or b=="Insert User_Id":
+                messagebox.showerror('Error',"Please Insert User_Id")
+            else:
+                messagebox.showerror("Error","Invalid User_Id")
+
+        c.execute("SELECT * FROM cv_placement WHERE User_ID = :id",{'id':flag})
+
+        vessel=c.fetchall()
         counter=1
-        for i in records:
+
+        for i in vessel:
             for j in i:
                 if counter==1:
                     if j!=b:
-                        print("Sachi")
-                        if b=="" or b=="Insert User_Id":
-                            messagebox.showerror('Error',"Please Insert User_Id")
-                        else:
-                            messagebox.showerror("Error","Invalid User_Id")
-                            break
+                        pass
                     elif j==b:
                         r1=str(i[1])    #f_name 
                         r2=str(i[2])    # Field_of_job t
