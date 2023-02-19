@@ -29,7 +29,7 @@ def home():
 
 def show_cv():
     main.destroy()
-    import cv
+    import cvtemp
 
 
 # fonts-------------------------------------------------------
@@ -122,30 +122,30 @@ random = Label(bar, text='hello', fg="black", bg="black", pady=380, padx=97).gri
 logo1 = Label(bar, image=logo, bg="black").place(y=25)
 
 # buttons--------------------------------------------
-home_btn = Button(bar, text="HOME", bg="#213A5C", fg="white", padx=76.2, font=my_font, pady=4,
+home_btn = Button(bar, text="HOME", bg="#213A5C", fg="white", padx=80.4, font=my_font, pady=4,
                   command=lambda: indicate(home_indicate, home))
 home_btn.place(y=240, x=0)
 
-about_btn = Button(bar, text="ABOUT", bg=cblue, fg="white", padx=73.2, pady=4, font=my_font,
+about_btn = Button(bar, text="ABOUT", bg=cblue, fg="white", padx=76, pady=4, font=my_font,
                    command=lambda: indicate(about_indicate, about_p))
 about_btn.place(y=285, x=0)
 
-cv_btn = Button(bar, text="CV FORM", bg=cblue, fg="white", padx=63.4, font=my_font, pady=4,
+cv_btn = Button(bar, text="CV FORM", bg=cblue, fg="white", padx=66.5, font=my_font, pady=4,
                 command=lambda: indicate(cv_indicate, cv_page))
 cv_btn.place(y=330, x=0)
 
-vacancy_btn = Button(bar, text="VACANCY FORM", bg=cblue, fg="white", padx=31.4, font=my_font, pady=4, state=DISABLED)
+vacancy_btn = Button(bar, text="VACANCY FORM", bg=cblue, fg="white", padx=38.5, font=my_font, pady=4, state=DISABLED)
 vacancy_btn.place(y=375, x=0)
 
-profile_btn = Button(bar, text="PROFILE", bg=cblue, fg="white", padx=67, font=my_font, pady=4, state=DISABLED,
+profile_btn = Button(bar, text="PROFILE", bg=cblue, fg="white", padx=69.3, font=my_font, pady=4, state=DISABLED,
                      command=lambda: indicate(profile_indicate))
 profile_btn.place(y=420, x=0)
 
-exit_btn = Button(bar, text="EXIT", bg=cblue, fg="white", padx=83.4, font=my_font, pady=4, command=exit_all)
+exit_btn = Button(bar, text="EXIT", bg=cblue, fg="white", padx=87, font=my_font, pady=4, command=exit_all)
 exit_btn.place(y=465, x=0)
 
-show_btn = Button(bar, text="SHOW CV", bg=cblue, fg="white", padx=83.4, font=my_font, pady=4, command=show_cv)
-show_btn.place(y=505, x=0)
+show_btn = Button(bar, text="SHOW CV", bg=cblue, fg="white", padx=64.4, font=my_font, pady=4, command=show_cv)
+show_btn.place(y=510, x=0)
 
 # top bar--------------------------------------------------
 cvbar = Frame(main, bg="white", borderwidth=1)
@@ -176,7 +176,7 @@ exit_indicate = tk.Label(bar, text=' ', bg="#fCA311")
 exit_indicate.place(x=0, y=465, width=5, height=37)
 
 show_indicate = tk.Label(bar, text=' ', bg="#fCA311")
-show_indicate.place(x=0, y=505, width=5, height=37)
+show_indicate.place(x=0, y=510, width=5, height=37)
 #create database_______
 def cv_datab():
     try:
@@ -291,32 +291,35 @@ def update():
 
 #fet_function----------------------------------------
 def fet():
-        global oid
-        oid=id_entry.get()
-        id_entry.delete(0,END)
-        # Connect to the database
-        conn = sqlite3.connect("cv_detail.db")
-        c=conn.cursor()
-        # Retrieve the CV information
-        c.execute("SELECT * FROM cv_placement WHERE User_Id = ?", (oid,))
-        # global records
-        records=c.fetchall()
-        i=len(records)-1
+    global oid
+    oid=id_entry.get()
+    id_entry.delete(0,END)
+    # Connect to the database
+    conn = sqlite3.connect("cv_detail.db")
+    c=conn.cursor()
+    # Retrieve the CV information
+    c.execute("SELECT * FROM cv_placement WHERE User_Id = ?", (oid,))
+    global records
+    records=c.fetchall()
+    i=len(records)-1
+    c.execute("SELECT User_Id FROM cv_placement")
+    # compares value if it is empty-----------
+    if oid=="" or oid=="Insert User_Id":
+        messagebox.showerror("ERROR",'Please enter your User_Id')
+        return
+    # compares value if its filled-------
+    elif(oid!=""):
         while i >= 0:
-            if records[i][0]!=oid:
-                if oid=="" or oid=="Insert User_Id":
-                    messagebox.showerror("ERROR",'Please enter your User_Id')
-                else:
-                    messagebox.showerror("ERROR",'Invalid User_Id')
-                    break
-            elif records[i][0]==oid:
+            if records[i][0]==oid:
+                i=i-1
+                print(records[i][0])
                 global next
                 next = Tk()
                 next.minsize(1100, 710)
                 next.maxsize(1100, 710)
                 next.title("CV-ANCIES")
                 next.iconbitmap('logo..ico')
-                next.config(bg="#4A78A9")
+                next.config(bg="#3D5A80")
 
                 cv_ttl_next = tk.Label(next, text="CV ENTRIES", font=my_font4, fg="white", bg="#3D5A80")
                 cv_ttl_next.place(x=20, y=40)
@@ -440,13 +443,16 @@ def fet():
                     reference_ent_next.insert(0,n[15])
                     anything_else1_ent_next.insert(0,n[16])
 
-                    save_btn=Button(next, text='Update', font=my_font4, bg="#213A5C", fg="white", command=update)
-                    save_btn.place(x=630,y=600)
-
-                break
-            else:
-                pass
-
+                    save_btn=Button(next, text='Update', font=my_font2, bg="#213A5C", fg="white",padx=60 ,command=update)
+                    save_btn.place(x=590,y=600)
+                    break
+            break
+        else:
+            messagebox.showerror("Error","Invalid User_Id")        
+    conn.commit()
+    conn.close()
+        
+        
 
 
 # cv_form_frame------------------------------------
@@ -455,40 +461,40 @@ def cv_page():
     cv_frame.place(x=230, y=47)
     cv_ttl = tk.Label(cv_frame, text="CV ENTRIES", font=my_font4, fg="white", bg="#3D5A80")
     cv_ttl.place(x=20, y=40)
-    cv_ttl2 = tk.Label(cv_frame, text="Please enter the following data", font=my_font0, fg="white", bg="#3D5A80")
+    cv_ttl2 = tk.Label(cv_frame, text="Please enter the following data (* Required)", font=my_font0, fg="white", bg="#3D5A80")
     cv_ttl2.place(x=20, y=85)
 
-    Fname_lbl = tk.Label(cv_frame, text="Full Name", font=my_font0, fg="white", bg="#3D5A80")
+    Fname_lbl = tk.Label(cv_frame, text="Full Name *", font=my_font0, fg="white", bg="#3D5A80")
     Fname_lbl.place(x=20, y=130)
     Fname_ent = Entry(cv_frame, font=my_font1, bg="white", fg="black")
     Fname_ent.place(x=20, y=160)
 
-    Field_of_job_lbl = tk.Label(cv_frame, text="Field of Job", font=my_font0, fg="white", bg="#3D5A80")
+    Field_of_job_lbl = tk.Label(cv_frame, text="Field of Job *", font=my_font0, fg="white", bg="#3D5A80")
     Field_of_job_lbl.place(x=20, y=220)
     Field_of_job_ent = Entry(cv_frame, font=my_font1, bg="white", fg="black")
     Field_of_job_ent.place(x=20, y=250)
 
-    contact_lbl = tk.Label(cv_frame, text="Contact Number", font=my_font0, fg="white", bg="#3D5A80")
+    contact_lbl = tk.Label(cv_frame, text="Contact Number *", font=my_font0, fg="white", bg="#3D5A80")
     contact_lbl.place(x=20, y=310)
     contact_ent = Entry(cv_frame, font=my_font1, bg="white", fg="black")
     contact_ent.place(x=20, y=340)
 
-    email1_lbl = tk.Label(cv_frame, text="Email", font=my_font0, fg="white", bg="#3D5A80")
+    email1_lbl = tk.Label(cv_frame, text="Email *", font=my_font0, fg="white", bg="#3D5A80")
     email1_lbl.place(x=20, y=400)
     email1_ent = Entry(cv_frame, font=my_font1, bg="white", fg="black")
     email1_ent.place(x=20, y=430)
 
-    address1_lbl = tk.Label(cv_frame, text="Address", font=my_font0, fg="white", bg="#3D5A80")
+    address1_lbl = tk.Label(cv_frame, text="Address *", font=my_font0, fg="white", bg="#3D5A80")
     address1_lbl.place(x=20, y=490)
     address1_ent = Entry(cv_frame, font=my_font1, bg="white", fg="black")
     address1_ent.place(x=20, y=520)
 
-    aboutMe_lbl = tk.Label(cv_frame, text="About Me", font=my_font0, fg="white", bg="#3D5A80")
+    aboutMe_lbl = tk.Label(cv_frame, text="About Me *", font=my_font0, fg="white", bg="#3D5A80")
     aboutMe_lbl.place(x=20, y=580)
     aboutMe_ent = Entry(cv_frame, font=my_font1, bg="white", fg="black")
     aboutMe_ent.place(x=20, y=600)
 
-    extra_skill1_lbl = tk.Label(cv_frame, text="Extra Skill 1", font=my_font0, fg="white", bg="#3D5A80")
+    extra_skill1_lbl = tk.Label(cv_frame, text="Extra Skill 1 *", font=my_font0, fg="white", bg="#3D5A80")
     extra_skill1_lbl.place(x=305, y=130)
     extra_skill1_ent = Entry(cv_frame, font=my_font1, bg="white", fg="black")
     extra_skill1_ent.place(x=305, y=160)
@@ -498,7 +504,7 @@ def cv_page():
     extra_skill2_ent = Entry(cv_frame, font=my_font1, bg="white", fg="black")
     extra_skill2_ent.place(x=305, y=250)
 
-    yearsOf_expereience1_lbl = tk.Label(cv_frame, text="Years of Expereience", font=my_font0, fg="white", bg="#3D5A80")
+    yearsOf_expereience1_lbl = tk.Label(cv_frame, text="Years of Experience *", font=my_font0, fg="white", bg="#3D5A80")
     yearsOf_expereience1_lbl.place(x=305, y=310)
     yearsOf_expereience1_ent = Entry(cv_frame, font=my_font1, bg="white", fg="black")
     yearsOf_expereience1_ent.place(x=305, y=340)
@@ -508,7 +514,7 @@ def cv_page():
     about_experience_ent = Entry(cv_frame, font=my_font1, bg="white", fg="black")
     about_experience_ent.place(x=305, y=430)
 
-    proficient_Language1_lbl = tk.Label(cv_frame, text="Proficient Language 1", font=my_font0, fg="white", bg="#3D5A80")
+    proficient_Language1_lbl = tk.Label(cv_frame, text="Proficient Language 1 *", font=my_font0, fg="white", bg="#3D5A80")
     proficient_Language1_lbl.place(x=305, y=490)
     proficient_Language1_ent = Entry(cv_frame, font=my_font1, bg="white", fg="black")
     proficient_Language1_ent.place(x=305, y=520)
@@ -518,17 +524,17 @@ def cv_page():
     proficient_Language2_ent = Entry(cv_frame, font=my_font1, bg="white", fg="black")
     proficient_Language2_ent.place(x=305, y=610)
 
-    qualification1_lbl = tk.Label(cv_frame, text="Qualification 1", font=my_font0, fg="white", bg="#3D5A80")
+    qualification1_lbl = tk.Label(cv_frame, text="Qualification 1 *", font=my_font0, fg="white", bg="#3D5A80")
     qualification1_lbl.place(x=590, y=130)
     qualification1_ent = Entry(cv_frame, font=my_font1, bg="white", fg="black")
     qualification1_ent.place(x=590, y=160)
 
-    qualification2_lbl = tk.Label(cv_frame, text="Qualification 2", font=my_font0, fg="white", bg="#3D5A80")
+    qualification2_lbl = tk.Label(cv_frame, text="Qualification 2 *", font=my_font0, fg="white", bg="#3D5A80")
     qualification2_lbl.place(x=590, y=220)
     qualification2_ent = Entry(cv_frame, font=my_font1, bg="white", fg="black")
     qualification2_ent.place(x=590, y=250)
 
-    reference_lbl = tk.Label(cv_frame, text="Reference", font=my_font0, fg="white", bg="#3D5A80")
+    reference_lbl = tk.Label(cv_frame, text="Reference *", font=my_font0, fg="white", bg="#3D5A80")
     reference_lbl.place(x=590, y=310)
     reference_ent = Entry(cv_frame, font=my_font1, bg="white", fg="black")
     reference_ent.place(x=590, y=340)
@@ -558,22 +564,26 @@ def cv_page():
 
     # verification function-------------------------------------------------
     def verify():
-        a = Fname_ent.get(),
-        b = Field_of_job_ent.get(),
-        c = contact_ent.get(),
-        d = email1_ent.get(),
-        e = address1_ent.get(),
-        f = aboutMe_ent.get(),
-        g = yearsOf_expereience1_ent.get(),
-        h = proficient_Language1_ent.get(),
-        i = qualification1_ent.get(),
-        j = qualification2_ent.get(),
+        a = Fname_ent.get()
+        b = Field_of_job_ent.get()
+        c = contact_ent.get()
+        d = email1_ent.get()
+        e = address1_ent.get()
+        f = aboutMe_ent.get()
+        g = yearsOf_expereience1_ent.get()
+        h = proficient_Language1_ent.get()
+        i = qualification1_ent.get()
+        j = qualification2_ent.get()
         k = reference_ent.get()
         l = extra_skill1_ent.get()
 
         if (a == "") or (b == "") or (c == "") or (
                 d == "") or (e == "") or (f == "") or (g == "") or (h == "") or (i == "") or (j == "") or (k == "") or (l == ""):
             messagebox.showerror("Error", "One or More Fields Empty.")
+        elif len(c)<10 or len(c)>10:
+            messagebox.showerror("Error","Invalid Contact Number")
+        elif '@' and '.com' not in d:
+            messagebox.showerror("Error","Invalid Email")
         else:
             import random
             import string
@@ -585,7 +595,7 @@ def cv_page():
 
     
     submit_btn1 = Button(cv_frame, text="SUBMIT", font=my_font4, bg="#213A5C", fg="white", command=verify)
-    submit_btn1.place(x=590, y=575)
+    submit_btn1.place(x=620, y=570)
     edit_btn1 = Button(cv_frame, text="EDIT", font=my_font4, bg="#213A5C", fg="white", command=edit)
     edit_btn1.place(x=710, y=0)
 
