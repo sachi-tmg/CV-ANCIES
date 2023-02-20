@@ -25,7 +25,7 @@ def exit_all():
 
 def home():
     main.destroy()
-    runpy.run_path("scratch.py")
+    runpy.run_path("login.py")
 
 
 my_font0 = Font(
