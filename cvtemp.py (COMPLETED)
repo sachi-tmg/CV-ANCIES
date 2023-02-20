@@ -44,6 +44,10 @@ my_font3 = Font(
         slant = 'roman',
         overstrike = 0)
 
+
+def show_vac():
+    import recpop
+
 def del1(event):
     a=id_entry.get()
     if a=='Insert User_Id':
@@ -54,6 +58,7 @@ id_entry=Entry(cvtemp,font=my_font,relief=GROOVE,width=13)
 id_entry.insert(0,'Insert User_Id')
 id_entry.place(x=12,y=5)
 id_entry.bind("<FocusIn>",del1)
+
 
 def load_cv_values():
     try:
@@ -205,6 +210,9 @@ def load_cv_values():
                         #edit button-------------------------------------------------------------
                         edit_btn=Button(cvtemp,bg="#3D5A80",fg='white',text="Edit",font=my_font0,command=edit)
                         edit_btn.place(x=550,y=2)
+                        #show button-------------------------------------------------------------
+                        submit_btn=Button(cvtemp,bg="#3D5A80",fg='white',text="Show Vacancy",font=my_font0,command=show_vac)
+                        submit_btn.place(x=500,y=650)   
                 conn.commit()
                 conn.close() 
                 counter+=1
