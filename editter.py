@@ -14,39 +14,6 @@ c = conn.cursor()
 
 
 
-
-def query():
-    # create a databases or connect to one
-    conn = sqlite3.connect('Vacancy.db')
-
-    # create cursor
-    c = conn.cursor()
-
-    # query of the database
-    c.execute('SELECT*  FROM details')
-
-    records = c.fetchall()
-    print(records)
-
-    # loop through the results
-    print_record = ''
-    for record in records:
-        print_record += str(record[0]) + ' ' + str(record[1]) + '' + '\t' + str(record[5]) + '\n'
-
-    query_label = Label(root, text=print_record)
-    query_label.grid(row=8, column=0, columnspan=2)
-
-    conn.commit()
-    conn.close()
-
-
-
-
-# create query button
-query_btn = Button(root, text='Show Records', command=query)
-query_btn.grid(row=2, column=0, columnspan=2, pady=10, padx=10, ipadx=100)
-
-
 def delete():
     # create database
     conn = sqlite3.connect('Vacancy.db')
@@ -86,7 +53,6 @@ def edit():
 
     # create cursor
     c = conn.cursor()
-
     record_id = delete_box.get()
     c.execute('SELECT * FROM details WHERE oid= ' + record_id)
     records = c.fetchall()
@@ -198,32 +164,30 @@ def update():
 
     record_id = delete_box.get()
 
-    
-
     c.execute("""UPDATE details SET
     name = :name,
     address = :address,
     language = :language,
     field =:field,
     skills=:skills,
-    salary = :salary
+    salary = :salary,
     contact=:contact,
     qualification=:qualification,
     anything_else=:anything_else,
     email=:email,
-    yearOfExperience=:yearOfExperience,
+    yearOfExperience=:yearOfExperience
     WHERE oid = :oid""",
               {'name': c_name.get(),
-                'address': adderesss.get(),
-                'language': lang.get(),
-                'field': fieldd.get(),
-                'skills': skillss.get(),
-                'salary': salaryy.get(),
-                'contact': con.get(),
-                'qualification': quali.get(),
-                'anything_else': anye.get(),
-                'email': emaill.get(),
-                'yearOfExperience': yoe.get(),
+               'address': adderesss.get(),
+               'language': lang.get(),
+               'field': fieldd.get(),
+               'skills': skillss.get(),
+               'salary': salaryy.get(),
+               'contact': con.get(),
+               'qualification': quali.get(),
+               'anything_else': anye.get(),
+               'email': emaill.get(),
+               'yearOfExperience': yoe.get(),
                'oid': record_id
 
                }
