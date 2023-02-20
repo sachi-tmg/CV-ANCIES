@@ -4,6 +4,7 @@ from tkinter.font import Font
 from tkinter import messagebox
 import tkinter as tk
 import sqlite3
+import runpy
 
 white = "#CBD8ED"
 bgblue = "#4A78A9"
@@ -25,11 +26,12 @@ def exit_all():
 
 def home():
     main.destroy()
-    import login
+    runpy.run_path("login.py")
+    
 
 def show_cv():
     main.destroy()
-    import cvtemp
+    runpy.run_path("cvtemp.py")
 
 
 # fonts-------------------------------------------------------
@@ -177,7 +179,9 @@ exit_indicate.place(x=0, y=465, width=5, height=37)
 
 show_indicate = tk.Label(bar, text=' ', bg="#fCA311")
 show_indicate.place(x=0, y=510, width=5, height=37)
-#create database_______
+
+
+#create database-------------------------------------------------
 def cv_datab():
     try:
         log = sqlite3.connect('cv_detail.db')
@@ -208,6 +212,7 @@ def cv_datab():
 
     except:
         pass
+
 
 
 # hide_function-------
@@ -552,7 +557,7 @@ def cv_page():
             if a=='Insert User_Id':
                 id_entry.delete(0,END)
         global id_entry
-        id_entry=Entry(cv_frame,font=my_font,relief=GROOVE)
+        id_entry=Entry(cv_frame,font=my_font,relief=GROOVE,width=15)
         id_entry.insert(0,'Insert User_Id')
         id_entry.place(x=520,y=20)
         id_entry.bind("<FocusIn>",del1)
@@ -599,7 +604,7 @@ def cv_page():
     edit_btn1 = Button(cv_frame, text="EDIT", font=my_font4, bg="#213A5C", fg="white", command=edit)
     edit_btn1.place(x=710, y=0)
 
-    # Data insertion___________
+    # Data insertion---------------------------------------------------------------
     def submit():
         log = sqlite3.connect('cv_detail.db')
 
@@ -608,8 +613,27 @@ def cv_page():
 
         # insert into tables
         log1.execute(
-            "INSERT INTO cv_placement VALUES(:User_ID,:f_name ,:Field_of_job,:contact,:email1,:address1,:aboutMe,:extra_skill1,:extra_skill2,:yearsOf_expereience1,:about_experience,:proficient_Language1,:proficient_Language2,:qualification1,:qualification2,:reference,:anything_else1)",
-            {
+            """"INSERT INTO cv_placement VALUES(
+                :User_ID,
+                :f_name,
+                :Field_of_job,
+                :contact,
+                :email1,
+                :address1,
+                :aboutMe,
+                :extra_skill1,
+                :extra_skill2,
+                :yearsOf_expereience1,
+                :about_experience,
+                :proficient_Language1,
+                :proficient_Language2,
+                :qualification1,
+                :qualification2,
+                :reference,
+                :anything_else1
+                )""",
+
+                {
                 'User_ID': rand,
                 'f_name': Fname_ent.get(),
                 'Field_of_job': Field_of_job_ent.get(),
@@ -627,10 +651,13 @@ def cv_page():
                 'qualification2': qualification2_ent.get(),
                 'reference': reference_ent.get(),
                 'anything_else1': anything_else1_ent.get()
+
             })
 
         log.commit()
         log.close()
+
+
 
         # clear entries
         Fname_ent.delete(0, END)
