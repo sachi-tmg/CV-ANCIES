@@ -286,5 +286,3 @@ def register():
     reg_p.mainloop()
 
 register()
-
-
