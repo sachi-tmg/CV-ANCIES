@@ -3,10 +3,7 @@ from PIL import Image, ImageTk
 from tkinter.font import Font
 from tkinter import messagebox
 import sqlite3
-#4A78A9
-# white="#CBD8ED"
-# bgblue="#4A78A9"
-# dblue="#4A78A9"
+
 #button commands---------------------------------------
 def registration():
        loginp.destroy()
@@ -179,18 +176,10 @@ register_btn=Button(logon,bg="#4A78A9",fg='white',text="REGISTER",font=my_font0,
 register_btn.place(x=110,y=329)
 
 
+
 img2=Image.open('help.png')
 img3=img2.resize((20,20))
 help_ico=ImageTk.PhotoImage(img3)
 help_btn=Button(loginp,image=help_ico,bg="#fCA311").place(x=1050,y=2)
 
 loginp.mainloop()
-
-
-
-
-
-
-
-
-
