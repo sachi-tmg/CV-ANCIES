@@ -26,8 +26,10 @@ def categ():
 
 
 def check():
-    a = user_entry.get()
-    b = pw_entry.get()
+    global p
+    global q
+    p =user_entry.get()
+    q =pw_entry.get()
     try:
         conn = sqlite3.connect('CVAN.db')
         c = conn.cursor()
@@ -38,7 +40,7 @@ def check():
         global i
         i = len(records) - 1
         while i >= 0:
-            if records[i][2] != a or records[i][4] != b:
+            if records[i][2] != p or records[i][4] != q:
                 i = i - 1
                 if i == -1:
                     messagebox.showerror("Login", "Invalid Credentials")
@@ -46,7 +48,7 @@ def check():
                 conn.commit()
                 messagebox.showinfo("Login", "Logged in Successfully")
                 categ()
-                break
+                return p
         conn.commit()
         conn.close()
     except:
@@ -98,7 +100,6 @@ log.place(x=150, y=135)
 log_ttle = Label(log, text="LOGIN", fg="#CBD8ED", bg="#CBD8ED", font=my_font2, padx=100, pady=165)
 log_ttle.grid()
 
-
 # event-entries--------------------------------
 def del1(event):
     a = user_entry.get()
@@ -123,6 +124,7 @@ user_entry = Entry(log, bg="#CBD8ED", font=my_font1, fg="#2B2828", width=20, bor
 user_entry.insert(0, "Username")
 user_entry.place(x=27, y=130)
 user_entry.bind("<FocusIn>", del1)
+
 
 # passworddd----------------------------------------
 pw = Label(log, text="Password:", font=my_font1, bg="#CBD8ED", fg="black")
@@ -163,9 +165,10 @@ hide_btn.place(y=208, x=245)
 
 # verify function-------------------------------------
 def verify():
-    a = user_entry.get()
+
+    aa = user_entry.get()
     b = pw_entry.get()
-    if (a == "" or a == "Username:") or (b == "" or b == "Password"):
+    if (aa == "" or aa == "Username:") or (b == "" or b == "Password"):
         messagebox.showerror("Login", "One or More Fields Empty.")
     elif len(b) < 6:
         messagebox.showerror("Password Reset", "Password must be more than 6 characters")
