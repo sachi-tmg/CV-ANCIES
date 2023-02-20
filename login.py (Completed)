@@ -3,22 +3,27 @@ from PIL import Image, ImageTk
 from tkinter.font import Font
 from tkinter import messagebox
 import sqlite3
+import runpy
+
 
 #button commands---------------------------------------
 def registration():
        loginp.destroy()
-       import register
+       runpy.run_path("register.py")
 
 
+
+#categ function which determines the user's identification----------
 def categ():
     if records[i][5]=="Company":
         loginp.destroy()
-        import vacancy
+        runpy.run_path("vacancy.py")
     elif records[i][5]=="User":
         loginp.destroy()
-        import cvform
+        runpy.run_path("cvform.py")
 
 
+#check function, this fetchs all the data from 'Check.db'-------------
 def check():
     a=user_entry.get()
     b=pw_entry.get()
@@ -49,6 +54,7 @@ def check():
 
 
 
+#window------------------------------------------------
 
 loginp=Tk()
 loginp.minsize(1000,655)
@@ -56,7 +62,9 @@ loginp.maxsize(1000,655)
 loginp.title("CV-ANCIES")
 loginp.iconbitmap('logo..ico')
 loginp.config(bg="#4A78A9")
-#fonst------------------------------------------------
+
+#fonts------------------------------------------------
+
 my_font0 = Font(
     family = 'Lucida sans',
     size = 11,
@@ -133,11 +141,11 @@ def verify():
     b=pw_entry.get()
     if (a=="" or a=="Username:") or (b=="" or b=="Password"):
         messagebox.showerror("Login","One or More Fields Empty.")
-    elif len(b)<6:
-        messagebox.showerror("Password Reset","Password must be more than 6 characters")
     else:
         check()  
 
+
+#image for show and hide-------------
 a=Image.open('show.png')
 a1=a.resize((20,20))
 show_img=ImageTk.PhotoImage(a1)
@@ -148,7 +156,7 @@ hide_img=ImageTk.PhotoImage(b1)
             
 
 
-    #hide/show functions 
+#hide/show functions -------------------------------------------
 def hide():
        show_btn=Button(logon,image=show_img,command=show,bg="#CBD8ED",borderwidth=0,activebackground="#CBD8ED")
        show_btn.place(y=208,x=245)
@@ -159,10 +167,14 @@ def show():
        hide_btn.place(y=208,x=245)
        pw_entry.config(show="*")
 
+    
+#show button and hide button---------------------------------------------------------
+
 show_btn=Button(logon,image=show_img,command=show,bg="#CBD8ED",borderwidth=0,activebackground="#CBD8ED")
 show_btn.place(y=208,x=245)
 hide_btn=Button(logon,image=hide_img,command=hide,bg="#CBD8ED",borderwidth=0,activebackground="#CBD8ED")
 hide_btn.place(y=208,x=245)
+
 
 
 #loging button---------------------------------------------
@@ -177,9 +189,9 @@ register_btn.place(x=110,y=329)
 
 
 
-img2=Image.open('help.png')
-img3=img2.resize((20,20))
-help_ico=ImageTk.PhotoImage(img3)
-help_btn=Button(loginp,image=help_ico,bg="#fCA311").place(x=1050,y=2)
+# img2=Image.open('help.png')
+# img3=img2.resize((20,20))
+# help_ico=ImageTk.PhotoImage(img3)
+# help_btn=Button(loginp,image=help_ico,bg="#fCA311").place(x=1050,y=2)
 
 loginp.mainloop()
