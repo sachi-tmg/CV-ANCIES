@@ -18,21 +18,17 @@ main.title("CV-ANCIES")
 main.iconbitmap('logo..ico')
 main.config(bg="#4A78A9")
 
-
 # button commands---------------------------------------------
 def exit_all():
     main.destroy()
-
 
 def home():
     main.destroy()
     runpy.run_path("login.py")
     
-
 def show_cv():
     main.destroy()
     runpy.run_path("cvtemp.py")
-
 
 # fonts-------------------------------------------------------
 my_font0 = Font(
@@ -41,14 +37,12 @@ my_font0 = Font(
     weight='bold',
     slant='roman',
     overstrike=0)
-
 my_font = Font(
     family='Lucida sans',
     size=13,
     weight='bold',
     slant='roman',
     overstrike=0)
-
 my_font1 = Font(
     family='Lucida sans',
     size=15,
@@ -67,7 +61,6 @@ my_font3 = Font(
     weight='bold',
     slant='roman',
     overstrike=0)
-
 my_font4 = Font(
     family='Lucida sans',
     size=20,
@@ -180,7 +173,6 @@ exit_indicate.place(x=0, y=465, width=5, height=37)
 show_indicate = tk.Label(bar, text=' ', bg="#fCA311")
 show_indicate.place(x=0, y=510, width=5, height=37)
 
-
 #create database-------------------------------------------------
 def cv_datab():
     try:
@@ -209,11 +201,8 @@ def cv_datab():
            """)
         log.commit()
         log.close()
-
     except:
         pass
-
-
 
 # hide_function-------
 def hide_indicators(lb):
@@ -224,13 +213,11 @@ def hide_indicators(lb):
     profile_indicate.config(bg="#fCA311")
     exit_indicate.config(bg="#fCA311")
 
-
 # indicate_function---------------
 def indicate(lb, page):
     hide_indicators(lb)
     lb.config(bg='#91ffff')
     page()
-
 
 def update():
         log = sqlite3.connect('cv_detail.db')
@@ -292,7 +279,6 @@ def update():
         reference_ent_next.delete(0, END)
         anything_else1_ent_next.delete(0, END)
         next.destroy()
-
 
 #fet_function----------------------------------------
 def fet():
@@ -457,9 +443,6 @@ def fet():
     conn.commit()
     conn.close()
         
-        
-
-
 # cv_form_frame------------------------------------
 def cv_page():
     cv_frame = Frame(main, bg="#3D5A80", width=865, height=655)
@@ -564,9 +547,6 @@ def cv_page():
         Esubmit_btn=Button(cv_frame,bg="#3D5A80",fg='white',text="Submit",command=fet)
         Esubmit_btn.place(x=660,y=20)
 
-    
-    
-
     # verification function-------------------------------------------------
     def verify():
         a = Fname_ent.get()
@@ -612,26 +592,7 @@ def cv_page():
         log1 = log.cursor()
 
         # insert into tables
-        log1.execute(
-            """"INSERT INTO cv_placement VALUES(
-                :User_ID,
-                :f_name,
-                :Field_of_job,
-                :contact,
-                :email1,
-                :address1,
-                :aboutMe,
-                :extra_skill1,
-                :extra_skill2,
-                :yearsOf_expereience1,
-                :about_experience,
-                :proficient_Language1,
-                :proficient_Language2,
-                :qualification1,
-                :qualification2,
-                :reference,
-                :anything_else1
-                )""",
+        log1.execute("INSERT INTO cv_placement VALUES(:User_ID,:f_name,:Field_of_job,:contact,:email1,:address1,:aboutMe,:extra_skill1,:extra_skill2,:yearsOf_expereience1,:about_experience,:proficient_Language1,:proficient_Language2,:qualification1,:qualification2,:reference,:anything_else1)",
 
                 {
                 'User_ID': rand,
@@ -651,13 +612,10 @@ def cv_page():
                 'qualification2': qualification2_ent.get(),
                 'reference': reference_ent.get(),
                 'anything_else1': anything_else1_ent.get()
-
             })
 
         log.commit()
         log.close()
-
-
 
         # clear entries
         Fname_ent.delete(0, END)
@@ -677,7 +635,11 @@ def cv_page():
         reference_ent.delete(0, END)
         anything_else1_ent.delete(0, END)
 
-        
 cv_page()
 
 main.mainloop()
+
+
+
+
+
